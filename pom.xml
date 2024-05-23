@@ -121,21 +121,6 @@
             <version>${allure.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.10.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>5.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.17.0</version>
-        </dependency>
-        <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
             <version>4.0.1</version>
@@ -145,10 +130,20 @@
             <artifactId>jaxb-core</artifactId>
             <version>4.0.5</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.sun.xml.bind</groupId>-->
+<!--            <artifactId>jaxb-impl</artifactId>-->
+<!--            <version>4.0.5</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>4.0.5</version>
+            <groupId>org.apache.cxf.xjc-utils</groupId>
+            <artifactId>cxf-xjc-runtime</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-value-constructor</artifactId>
+            <version>3.0</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
@@ -160,6 +155,21 @@
             <artifactId>jaxws-ri</artifactId>
             <version>4.0.2</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-fluent-api</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-ts</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.13.0</version>
         </dependency>
     </dependencies>
 
@@ -174,10 +184,45 @@
                         <id>generate-sources</id>
                         <phase>generate-sources</phase>
                         <configuration>
+                            <additionalJvmArgs>-Djavax.xml.accessExternalDTD=all -Djavax.xml.accessExternalSchema=all</additionalJvmArgs>
                             <sourceRoot>${project.build.directory}/generated-sources</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>${project.basedir}/src/main/java/ge/tbc/tbcitacademy/resources/someService.wsdl</wsdl>
+                                    <wsdl>${project.basedir}/src/main/java/ge/tbc/tbcitacademy/resources/employees.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-validate</extraarg>
+                                        <extraarg>-xjc-Xfluent-api</extraarg>
+                                        <extraarg>-xjc-XautoNameResolution</extraarg>
+                                        <extraarg>-xjc-Xts:style:org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        http://www.w3.org/2001/XMLSchema.xsd
+                                    </bindingFiles>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>crcind-generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <additionalJvmArgs>-Djavax.xml.accessExternalDTD=all -Djavax.xml.accessExternalSchema=all</additionalJvmArgs>
+                            <sourceRoot>${project.build.directory}/generated-sources</sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/java/ge/tbc/tbcitacademy/resources/crcind.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-validate</extraarg>
+                                        <extraarg>-xjc-Xfluent-api</extraarg>
+                                        <extraarg>-xjc-XautoNameResolution</extraarg>
+                                        <extraarg>-xjc-Xts:style:org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        http://www.w3.org/2001/XMLSchema.xsd
+                                    </bindingFiles>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
@@ -186,6 +231,33 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-fluent-api</artifactId>
+                        <version>3.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.cxf.xjc-utils</groupId>
+                        <artifactId>cxf-xjc-runtime</artifactId>
+                        <version>4.0.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.cxf.xjcplugins</groupId>
+                        <artifactId>cxf-xjc-ts</artifactId>
+                        <version>4.0.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-value-constructor</artifactId>
+                        <version>3.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                        <version>3.13.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

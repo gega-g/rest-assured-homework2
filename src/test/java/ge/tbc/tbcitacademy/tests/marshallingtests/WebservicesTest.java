@@ -1,4 +1,4 @@
-package ge.tbc.tbcitacademy.tests;
+package ge.tbc.tbcitacademy.tests.marshallingtests;
 
 import ge.tbc.tbcitacademy.steps.WebservicesSteps;
 import io.qameta.allure.Epic;
